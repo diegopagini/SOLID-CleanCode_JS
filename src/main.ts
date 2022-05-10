@@ -1,6 +1,7 @@
 /** @format */
 
 import './style.css';
+import './clean-code/05-dry';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
