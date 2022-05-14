@@ -3,10 +3,10 @@
 import { Post } from './05-dependency-b';
 import localPost from '../data/local-database.json';
 
-export class LocalDataBaseService {
+export class LocalDataBaseService implements PostProvider {
 	// ❌
 	async getFakePosts(): Promise<Post[]> {
-		return [
+		return await [
 			{
 				userId: 1,
 				id: 1,
@@ -22,11 +22,31 @@ export class LocalDataBaseService {
 			},
 		];
 	}
+
+	async getPosts(): Promise<Post[]> {
+		return await localPost;
+	}
 }
 
-export class JsonDataBaseService {
+export class JsonDataBaseService implements PostProvider {
 	// ✅
 	async getPosts(): Promise<Post[]> {
-		return localPost;
+		return await localPost;
 	}
+}
+
+export class WebApiPostService implements PostProvider {
+	async getPosts(): Promise<Post[]> {
+		return await (
+			await fetch('https://jsonplaceholder.typicode.com/posts')
+		).json();
+	}
+}
+
+/**
+ * Para el "Liskov Substitution Principle" y "Open Closed Principle".
+ */
+export abstract class PostProvider {
+	// ✅
+	abstract getPosts(): Promise<Post[]>;
 }

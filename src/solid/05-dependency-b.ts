@@ -1,6 +1,6 @@
 /** @format */
 
-import { JsonDataBaseService } from './05-dependency-c';
+import { PostProvider } from './05-dependency-c';
 
 export interface Post {
 	body: string;
@@ -21,7 +21,7 @@ export class PostService {
 	// }
 
 	// ✅
-	constructor(private postProvider: JsonDataBaseService) {}
+	constructor(private postProvider: PostProvider) {}
 
 	async getPosts(): Promise<Post[]> {
 		this.posts = await this.postProvider.getPosts();
